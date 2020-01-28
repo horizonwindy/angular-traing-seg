@@ -1,4 +1,4 @@
-export class portfolio {
+export class Portfolio {
     private _balance: number = 0;
 
     public get balance() {

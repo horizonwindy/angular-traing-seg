@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { portfolio } from 'src/models/portfolio';
+import { Portfolio } from 'src/models/portfolio';
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-portfolio-list',
@@ -8,10 +10,15 @@ import { portfolio } from 'src/models/portfolio';
 })
 export class PortfolioListComponent implements OnInit {
 
-  public items: portfolio[] = [
-    new portfolio('Port 1', 10_000),
-    new portfolio('Port 2', 30_000),
+  public items: Portfolio[] = [
+    new Portfolio('Port 1', 10_000),
+    new Portfolio('Port 2', 30_000),
   ];
+
+  public newItem: any = {
+    name: '',
+    initialCash: 10_000
+  };
 
   constructor() {
   }
@@ -21,21 +28,27 @@ export class PortfolioListComponent implements OnInit {
 
   public addPortfilio() {
 
-    const current = this.items.length;
-    const p = new portfolio(`Portfilio${current + 1}`, 0);
+    //const current = this.items.length;
+    const p = new Portfolio(this.newItem.name, this.newItem.initialCash);
+    this.newItem =  {
+      name: '',
+      initialCash: 10_000
+    };
     this.items.push(p);
   }
 
-  public removePortfilio(item: portfolio) {
+  public removePortfilio(item: Portfolio) {
     //this.items.splice(this.items.indexOf(item),1);
     this.items = this.items.filter((fitem) => fitem !== item);
+    //this.items = _.without(this.items,item);
+    //this.items = _.remove(this.items, ((value) => value === item));
   }
 
-  public depositPortfilio(item: portfolio) {
+  public depositPortfilio(item: Portfolio) {
     item.deposit(5000);
   }
 
-  public WithdrawPortfilio(item: portfolio) {
+  public WithdrawPortfilio(item: Portfolio) {
     try {
       item.withdraw(5000);
     }
@@ -55,7 +68,8 @@ export class PortfolioListComponent implements OnInit {
     this.items.forEach(m=> sum += m.balance);
     return sum;
    */
-    return this.items.reduce((a, b : portfolio) => a + b.balance, 0);
-    
-} 
+    //return this.items.reduce((a, b: portfolio) => a + b.balance, 0);
+    //return _.reduce(this.items,(a, b: portfolio) => a + b.balance, 0)
+    return _.sumBy(this.items, x => x.balance);
+  }
 }
