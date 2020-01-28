@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Portfolio } from 'src/models/portfolio';
 import * as _ from 'lodash';
+import * as qr from 'qrcode';
+import { async } from 'rxjs/internal/scheduler/async';
 
 
 @Component({
@@ -10,10 +12,14 @@ import * as _ from 'lodash';
 })
 export class PortfolioListComponent implements OnInit {
 
+  public currentSelect :Portfolio = null;
   public items: Portfolio[] = [
-    new Portfolio('Port 1', 10_000),
-    new Portfolio('Port 2', 30_000),
+    new Portfolio('Port 1', 10_000,''),
+    new Portfolio('Port 2', 60_000,''),
+    new Portfolio('Port 3', 160_000,''),
   ];
+
+  public url = 'https://www.telegraph.co.uk/content/dam/food-and-drink/2019/09/12/TELEMMGLPICT000059749644_trans_NvBQzQNjv4BqVVbCjfA6bIBgAdOdfDpfl2pVAPGnswc3wJYk82ksMmY.jpeg';
 
   public newItem: any = {
     name: '',
@@ -24,13 +30,15 @@ export class PortfolioListComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.load();
+    qr.toDataURL('test',{},  (err,url)=>{ console.log(url); });
   }
 
   public addPortfilio() {
 
     //const current = this.items.length;
     const p = new Portfolio(this.newItem.name, this.newItem.initialCash);
-    this.newItem =  {
+    this.newItem = {
       name: '',
       initialCash: 10_000
     };
@@ -71,5 +79,43 @@ export class PortfolioListComponent implements OnInit {
     //return this.items.reduce((a, b: portfolio) => a + b.balance, 0);
     //return _.reduce(this.items,(a, b: portfolio) => a + b.balance, 0)
     return _.sumBy(this.items, x => x.balance);
+  }
+
+  public classforPortName(item: Portfolio) {
+    return {
+      "port-name": true,
+      "danger": item.balance < 50000,
+      "warning": item.balance >= 50000 && item.balance < 100000
+    }
+  }
+
+  public  qrcodeFor(item: Portfolio){
+    return '';
+     //return await qr.toDataURL(item.name,{}, async (err,url)=>{ return  url; });
+  }
+
+  public save(){
+    const s = JSON.stringify(this.items);
+    localStorage.setItem("items",s);
+  }
+
+  public load(){
+    const s = localStorage.getItem("items");
+    const i = JSON.parse(s);
+    this.items = i.map((item)=> new Portfolio(item.name,item._balance));
+  }
+
+  public clear(){
+    localStorage.removeItem('items');
+  }
+
+  public foucs(item : Portfolio){
+    if(this.currentSelect === item){
+      this.currentSelect = null;
+    }
+    else{
+      this.currentSelect = item;
+    }
+
   }
 }
