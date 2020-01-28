@@ -1,9 +1,9 @@
-import { portfolio } from './portfolio';
+import { Portfolio } from './portfolio';
 
 export class User{
     constructor(
         public name: string = '',
-        public portfolios : portfolio[] = []
+        public portfolios : Portfolio[] = []
 
     ){
 
