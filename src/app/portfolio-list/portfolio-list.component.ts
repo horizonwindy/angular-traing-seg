@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Portfolio } from 'src/models/portfolio';
 import * as _ from 'lodash';
 import * as qr from 'qrcode';
-import { async } from 'rxjs/internal/scheduler/async';
+import { MessageLogService } from '../services/message-log.service';
+import { PortfoliolocalstorageService } from '../services/portfoliolocalstorage.service';
 
 
 @Component({
@@ -14,9 +15,9 @@ export class PortfolioListComponent implements OnInit {
 
   public currentSelect: Portfolio = null;
   public items: Portfolio[] = [
-    new Portfolio('Port 1', 10_000, ''),
-    new Portfolio('Port 2', 60_000, ''),
-    new Portfolio('Port 3', 160_000, ''),
+    new Portfolio('Port 1', 10_000),
+    new Portfolio('Port 2', 60_000),
+    new Portfolio('Port 3', 160_000),
   ];
 
   public url = `https://www.telegraph.co.uk/content/dam/food-and-drink/2019/09/12`
@@ -27,7 +28,7 @@ export class PortfolioListComponent implements OnInit {
     initialCash: 10_000
   };
 
-  constructor() {
+  constructor(public log: MessageLogService, public localStoragesService: PortfoliolocalstorageService) {
   }
 
   ngOnInit() {
@@ -48,14 +49,11 @@ export class PortfolioListComponent implements OnInit {
 
 
   public save() {
-    const s = JSON.stringify(this.items);
-    localStorage.setItem('items', s);
+    this.localStoragesService.save(this.items);
   }
 
   public load() {
-    const s = localStorage.getItem('items');
-    const i = JSON.parse(s);
-    this.items = i.map((item) => new Portfolio(item.name, item._balance));
+    this.items = this.localStoragesService.load();
   }
 
   public clear() {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Portfolio } from 'src/models/portfolio';
 import * as _ from 'lodash';
+import { MessageLogService } from '../services/message-log.service';
 
 @Component({
   selector: 'app-portfolio-list2',
@@ -11,7 +12,7 @@ export class PortfolioList2Component implements OnInit {
   @Input() public portfolioList: Portfolio[] = [];
   @Output() showCurrent = new EventEmitter<Portfolio>();
   public currentFocus: Portfolio = null;
-  constructor() { }
+  constructor(public log: MessageLogService) { }
 
   ngOnInit() {
   }
@@ -60,6 +61,7 @@ export class PortfolioList2Component implements OnInit {
     } else {
       this.currentFocus = item;
     }
+    this.log.add(`Select ${item.name}`);
     this.showCurrent.emit(this.currentFocus);
 
   }

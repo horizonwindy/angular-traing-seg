@@ -14,7 +14,7 @@ export class Portfolio {
     constructor(
         public name: string = '',
         initialCash: number = 0,
-        public qrcode: string = ''
+        public createDate: Date = new Date()
     ) {
         if (initialCash > 0) {
             this.deposit(initialCash);
