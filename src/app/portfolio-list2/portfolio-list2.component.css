@@ -1,0 +1,16 @@
+td.port-name {
+    color: royalblue;
+    font-weight: bold;
+}
+
+td.port-name.warning {
+    color: darkorange;
+}
+
+td.port-name.danger {
+    color: crimson;
+}
+
+tr.rowfoucs {
+    background-color: darkred;
+}

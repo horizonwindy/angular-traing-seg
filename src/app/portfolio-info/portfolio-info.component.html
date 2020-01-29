@@ -1,0 +1,10 @@
+<div class="card bg-dark text-light my-2">
+    <div class="card-body p-2">
+        <h3 class="card-header">
+            {{ portfolio ? portfolio.name : '' }}
+            <div *ngIf="portfolio?.balance">
+                {{ portfolio.balance | currency : ' '}}
+            </div>
+        </h3>
+    </div>
+</div>

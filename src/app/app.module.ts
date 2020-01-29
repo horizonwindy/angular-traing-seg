@@ -5,6 +5,8 @@ import { CounterComponent } from './counter/counter.component';
 import { PersonComponent } from './person/person.component';
 import { PortfolioListComponent } from './portfolio-list/portfolio-list.component';
 import { FormsModule  } from '@angular/forms';
+import { PortfolioInfoComponent } from './portfolio-info/portfolio-info.component';
+import { PortfolioList2Component } from './portfolio-list2/portfolio-list2.component';
 
 
 @NgModule({
@@ -12,7 +14,9 @@ import { FormsModule  } from '@angular/forms';
       AppComponent,
       CounterComponent,
       PersonComponent,
-      PortfolioListComponent
+      PortfolioListComponent,
+      PortfolioInfoComponent,
+      PortfolioList2Component
    ],
    imports: [
       BrowserModule,
