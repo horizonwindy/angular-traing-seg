@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SEG!!';
-  test = 'Google'
+  test = 'Google';
 }

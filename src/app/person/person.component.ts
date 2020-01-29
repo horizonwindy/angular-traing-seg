@@ -9,21 +9,21 @@ import { environment } from '../../environments/environment';
 })
 export class PersonComponent implements OnInit {
 
-  public p : Person;
+  public p: Person;
   public env = environment.env;
-  constructor() { 
-    this.p = new Person(50,160);
+  constructor() {
+    this.p = new Person(50, 160);
 
   }
 
   ngOnInit() {
   }
 
-  public eat(){
+  public eat() {
     this.p.weightKg += 1;
   }
 
-  public exercise(){
+  public exercise() {
     this.p.weightKg -= 2;
   }
 
